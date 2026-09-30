@@ -59,7 +59,8 @@ final class Http
         $origin = $_SERVER['HTTP_ORIGIN'] ?? null;
         if ($origin !== null) {
             $host = parse_url($origin, PHP_URL_HOST) . (($p = parse_url($origin, PHP_URL_PORT)) ? ":$p" : '');
-            if ($host !== ($_SERVER['HTTP_HOST'] ?? '')) self::fail('Ugyldig origin', 403);
+            // if ($host !== ($_SERVER['HTTP_HOST'] ?? '')) self::fail('Ugyldig origin', 403);
+            if ($host !== ($_SERVER['HTTP_HOST'] ?? '')) self::fail("Ugyldig origin: origin=$host, host=" . ($_SERVER['HTTP_HOST'] ?? ''), 403);
         }
     }
 }

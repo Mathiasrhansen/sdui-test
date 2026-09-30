@@ -6,6 +6,16 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: { alias: { "@": path.resolve(import.meta.dirname, "src") } },
-  // Same-origin i dev: browseren taler kun med Vite, som videresender /api til PHP
-  server: { proxy: { "/api": "http://localhost:8000" } },
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:8000",
+        configure: (proxy) => {
+          proxy.on("proxyReq", (proxyReq, req) => {
+            proxyReq.setHeader("Host", req.headers.host);
+          });
+        },
+      },
+    },
+  },
 });
