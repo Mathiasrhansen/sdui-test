@@ -13,16 +13,16 @@ export default function Dashboard() {
   const { status, percentage } = calculateTrainingStatus(hours, starts);
 
   return (
-    <div className="">
+    <div className="mb-4">
       <Header></Header>
       <div className="pl-4 pr-4">
         <h1 className="font-heading text-2xl">Flyvestatus i dag</h1>
         <div className="grid grid-cols-2 gap-4 mt-5">
-          <div className="bg-gray-100 rounded-2xl flex flex-col gap-4 px-4 py-2">
+          <div className="bg-gray-100 rounded-2xl flex flex-col gap-2 px-4 py-2">
             <h2 className="font-heading text-lg">Starter</h2>
             <p className="text-4xl">69</p>
           </div>
-          <div className="bg-gray-100 rounded-2xl flex flex-col gap-4 px-4 py-2">
+          <div className="bg-gray-100 rounded-2xl flex flex-col gap-2 px-4 py-2">
             <h2 className="font-heading text-lg">Flyvetid</h2>
             <p className="text-4xl">15:27</p>
           </div>

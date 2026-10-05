@@ -11,26 +11,33 @@ const items = [
 
 const Navbar = () => {
   return (
-    <nav className="fixed inset-x-0 bottom-0 bg-sea-600 text-white pb-[env(safe-area-inset-bottom)] pt-1">
-      <ul className="grid h-16 grid-cols-5">
-        {items.map(({ label, to, icon: Icon }) => (
-          <li key={to}>
-            <NavLink
-              to={to}
-              end={to === "/"}
-              className={({ isActive }) =>
-                `flex h-full flex-col items-center justify-center gap-1 text-sm ${
-                  isActive ? "font-semibold opacity-100" : "opacity-70"
-                }`
-              }
-            >
-              <Icon className="h-6 w-6" />
-              {label}
-            </NavLink>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <>
+      {/* Afstandsholder: navbaren er fixed og fylder ikke i flowet, så indholdet kan scrolle fri af den */}
+      <div
+        aria-hidden="true"
+        className="h-[calc(4.25rem+env(safe-area-inset-bottom))]"
+      />
+      <nav className="fixed inset-x-0 bottom-0 bg-sea-600 text-white pb-[env(safe-area-inset-bottom)] pt-1">
+        <ul className="grid h-16 grid-cols-5">
+          {items.map(({ label, to, icon: Icon }) => (
+            <li key={to}>
+              <NavLink
+                to={to}
+                end={to === "/"}
+                className={({ isActive }) =>
+                  `flex h-full flex-col items-center justify-center gap-1 text-sm ${
+                    isActive ? "font-semibold opacity-100" : "opacity-70"
+                  }`
+                }
+              >
+                <Icon className="h-6 w-6" />
+                {label}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </>
   );
 };
 
