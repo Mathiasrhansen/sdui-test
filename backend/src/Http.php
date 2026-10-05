@@ -30,7 +30,7 @@ final class Http
     {
         $id = $_SESSION['uid'] ?? null;
         if (!$id) self::fail('Ikke logget ind', 401);
-        $st = Db::pdo()->prepare('SELECT id, email, name, role FROM users WHERE id = ?');
+        $st = Db::pdo()->prepare('SELECT id, email, name, role, gender FROM users WHERE id = ?');
         $st->execute([$id]);
         $user = $st->fetch();
         if (!$user) {

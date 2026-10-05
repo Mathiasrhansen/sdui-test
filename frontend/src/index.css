@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@custom-variant dark (&:is(.dark *));
+/* @custom-variant dark (&:is(.dark *)); */
 
 :root {
   --radius: 0.625rem;
@@ -15,6 +15,27 @@
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
+}
+
+@font-face {
+  font-family: "Lexend-regular";
+  src: url("./assets/fonts/Lexend-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Lexend-light";
+  src: url("./assets/fonts/Lexend-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "open-sans-regular";
+  src: url("./assets/fonts/OpenSans-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
 }
 
 @theme inline {
@@ -33,9 +54,52 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  --font-sans: "open-sans-regular", sans-serif;
+  --font-heading: "Lexend-regular", sans-serif;
+  --font-heading-light: "Lexend-light", sans-serif;
+
+  /* Blue */
+  --color-blue-50: #e3f2fd;
+  --color-blue-200: #90caf9;
+  --color-blue-400: #2196f3;
+  --color-blue-800: #0d47a1;
+
+  /* Sea */
+  --color-sea-100: #bde8f5;
+  --color-sea-400: #4988c4;
+  --color-sea-600: #1c4d8d;
+  --color-sea-800: #0f2854;
+
+  /* Grey */
+  --color-grey-50: #f1f1f1;
+  --color-grey-200: #d3d3d3;
+  --color-grey-400: #afafaf;
+  --color-grey-600: #7c7c7c;
+  --color-grey-800: #343434;
+  --color-grey-900: #202020;
+
+  /* Warning */
+  --color-warning-50: #faeeda;
+  --color-warning-400: #ffc107;
+  --color-warning-800: #854f0b;
+
+  /* Error */
+  --color-error-50: #fcebeb;
+  --color-error-400: #f00e0e;
+  --color-error-800: #a32d2d;
+
+  /* Success */
+  --color-success-50: #c8e6c9;
+  --color-success-400: #4caf50;
+  --color-success-800: #2e7d32;
 }
 
-@layer base {
-  * { @apply border-border outline-ring/50; }
-  body { @apply bg-background text-foreground antialiased; }
-}
+/* @layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+} */

@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS users (
   email VARCHAR(190) NOT NULL UNIQUE,
   name VARCHAR(120) NOT NULL,
   role ENUM('user','admin') NOT NULL DEFAULT 'user',
+  gender ENUM('male','female','other') NOT NULL DEFAULT 'other',
   password_hash VARCHAR(255) NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
