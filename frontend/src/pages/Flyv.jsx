@@ -17,7 +17,6 @@ export default function Flyv() {
       <Menu>
         <MenuItem text="Logbog"></MenuItem>
       </Menu>
-
       <Navbar></Navbar>
     </div>
   );

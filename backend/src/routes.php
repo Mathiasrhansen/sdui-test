@@ -33,6 +33,49 @@ return [
 
     ['GET', '/api/me', fn() => Http::json(Http::requireUser())],
 
+    // Alle fly med seneste notes status og den loggede brugers favorit-markering
+    ['GET', '/api/fly', function () {
+        $user = Http::requireUser();
+        $st = Db::pdo()->prepare(
+            'SELECT f.id, f.flymodel, f.callsign, n.status, n.statusColor,
+                    (ff.fly_id IS NOT NULL) AS favorite
+             FROM fly f
+             LEFT JOIN noter n ON n.id = (SELECT MAX(id) FROM noter WHERE callsign = f.callsign)
+             LEFT JOIN fly_favoritter ff ON ff.fly_id = f.id AND ff.user_id = ?
+             ORDER BY f.callsign'
+        );
+        $st->execute([$user['id']]);
+        $rows = array_map(
+            fn($r) => ['favorite' => (bool)$r['favorite']] + $r,
+            $st->fetchAll()
+        );
+        Http::json($rows);
+    }],
+
+    // Sæt/fjern favorit for den loggede bruger: {fly_id, favorite: true|false}
+    ['POST', '/api/fly/favorite', function () {
+        $user = Http::requireUser();
+        $in = Http::body();
+        $flyId = filter_var($in['fly_id'] ?? null, FILTER_VALIDATE_INT);
+        if ($flyId === false || !is_bool($in['favorite'] ?? null)) {
+            Http::fail('Ugyldigt input', 422);
+        }
+
+        $pdo = Db::pdo();
+        $st = $pdo->prepare('SELECT 1 FROM fly WHERE id = ?');
+        $st->execute([$flyId]);
+        if (!$st->fetchColumn()) Http::fail('Flyet findes ikke', 404);
+
+        if ($in['favorite']) {
+            $pdo->prepare('INSERT IGNORE INTO fly_favoritter (user_id, fly_id) VALUES (?, ?)')
+                ->execute([$user['id'], $flyId]);
+        } else {
+            $pdo->prepare('DELETE FROM fly_favoritter WHERE user_id = ? AND fly_id = ?')
+                ->execute([$user['id'], $flyId]);
+        }
+        Http::json(['fly_id' => $flyId, 'favorite' => $in['favorite']]);
+    }],
+
     // Eksempel på beskyttet ressource, altid afgrænset til den loggede bruger
     ['GET', '/api/notes', function () {
         $user = Http::requireUser();

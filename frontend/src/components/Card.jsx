@@ -42,9 +42,13 @@ export function IconRow({ icon: Icon, children, onClick }) {
 // Rækken: tekst + pill og valgfri favorit-stjerne (ingen ramme)
 export function ItemRow({
   title,
-  pill, // { label: "OK", color: "blue" }
+  subtitle,
+  pill, // { label: "OK", color: "blue", className: "..." }
+  right,
+  actions,
+  titleClassName,
   favorite = false,
-  onToggleFavorite, // hvis den er med, vises stjernen
+  onToggleFavorite,
   className,
 }) {
   return (
@@ -64,11 +68,27 @@ export function ItemRow({
           />
         </button>
       )}
-      <span className="flex-1 text-lg">{title}</span>
-      {pill && (
-        <Pill variant="subtle" color={pill.color} className="px-3 text-sm">
-          {pill.label}
-        </Pill>
+
+      <div className="flex-1 min-w-0">
+        <div className={cn("text-lg", titleClassName)}>{title}</div>
+        {subtitle && <div className="text-base">{subtitle}</div>}
+      </div>
+
+      {right && <span className="text-lg">{right}</span>}
+
+      {(pill || actions) && (
+        <div className="flex flex-col items-end gap-1">
+          {pill && (
+            <Pill
+              variant="subtle"
+              color={pill.color}
+              className={cn("px-3 text-sm", pill.className)}
+            >
+              {pill.label}
+            </Pill>
+          )}
+          {actions}
+        </div>
       )}
     </div>
   );

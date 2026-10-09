@@ -11,8 +11,8 @@ const HEADER_BG = `url("data:image/svg+xml,${encodeURIComponent(HEADER_SVG)}")`;
 
 // TODO: erstat med rigtige klubber (fx fra et API-kald)
 const CLUBS = [
-  { value: "klub-1", label: "Nordsjællands Svæeveflyklub" },
-  { value: "klub-2", label: "Fr.sund-Fr.værk Flyvelkub" },
+  { value: "klub-1", label: "Nordsjællands Svæveflyklub" },
+  { value: "klub-2", label: "Fr.sund-Fr.værk Flyveklçub" },
 ];
 
 export default function Login() {

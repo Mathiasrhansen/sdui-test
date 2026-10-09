@@ -5,12 +5,16 @@ import { Pill, BarometerPill } from "@/components/Pill";
 import { calculateTrainingStatus } from "@/components/utils/calculateTrainingStatus";
 import { CardList, IconRow, ItemRow } from "@/components/Card";
 import { ClipboardCheck, Plane, ListChecks } from "lucide-react";
+import { useFly, pillColors } from "@/lib/fly";
 
 export default function Dashboard() {
   const starts = 38;
   const hours = 8 + 56 / 60;
 
   const { status, percentage } = calculateTrainingStatus(hours, starts);
+
+  const { data: fly } = useFly();
+  const favorites = fly?.filter((f) => f.favorite) ?? [];
 
   return (
     <div className="mb-4">
@@ -20,7 +24,7 @@ export default function Dashboard() {
         <div className="grid grid-cols-2 gap-4 mt-5">
           <div className="bg-gray-100 rounded-2xl flex flex-col gap-2 px-4 py-2">
             <h2 className="font-heading text-lg">Starter</h2>
-            <p className="text-4xl">69</p>
+            <p className="text-4xl">{starts}</p>
           </div>
           <div className="bg-gray-100 rounded-2xl flex flex-col gap-2 px-4 py-2">
             <h2 className="font-heading text-lg">Flyvetid</h2>
@@ -50,19 +54,27 @@ export default function Dashboard() {
           <IconRow icon={ListChecks}>1 punkt på todo-listen</IconRow>
         </CardList>
       </div>
-      <div className="pl-4 pr-4 mt-4">
-        <h2 className="font-heading text-lg mb-2.5">Materiel status</h2>
-        <CardList>
-          <ItemRow
-            title="XOD · ASK-23"
-            pill={{ label: "Batteri svagt", color: "yellow" }}
-          />
-          <ItemRow
-            title="XVF · Duo Discus"
-            pill={{ label: "U/S: skal repareres", color: "red" }}
-          />
-        </CardList>
-      </div>
+      {favorites.length > 0 && (
+        <div className="pl-4 pr-4 mt-4">
+          <h2 className="font-heading text-lg mb-2.5">Materiel status</h2>
+          <CardList>
+            {favorites.map((f) => (
+              <ItemRow
+                key={f.id}
+                title={`${f.callsign} · ${f.flymodel}`}
+                pill={
+                  f.status
+                    ? {
+                        label: f.status,
+                        color: pillColors[f.statusColor] ?? "gray",
+                      }
+                    : undefined
+                }
+              />
+            ))}
+          </CardList>
+        </div>
+      )}
       <Navbar></Navbar>
     </div>
   );

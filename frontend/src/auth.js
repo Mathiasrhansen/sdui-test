@@ -21,7 +21,8 @@ export function useMe() {
 export function useLogin() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (credentials) => api("/login", { method: "POST", body: credentials }),
+    mutationFn: (credentials) =>
+      api("/login", { method: "POST", body: credentials }),
     onSuccess: (user) => qc.setQueryData(["me"], user),
   });
 }
@@ -33,6 +34,7 @@ export function useLogout() {
     onSuccess: () => {
       qc.setQueryData(["me"], null);
       qc.removeQueries({ queryKey: ["notes"] });
+      qc.removeQueries({ queryKey: ["fly"] });
     },
   });
 }
