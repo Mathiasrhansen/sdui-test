@@ -8,14 +8,14 @@ export default function Flyv() {
       <Header></Header>
       <h2 className="text-xl text-grey-900 ml-4 mr-4 mb-4">Klub</h2>
       <Menu>
-        <MenuItem text="Dagsrapporter"></MenuItem>
-        <MenuItem text="Startlister"></MenuItem>
-        <MenuItem text="Booking"></MenuItem>
-        <MenuItem text="Klubstatistik"></MenuItem>
+        <MenuItem text="Dagsrapporter" to="/flyv/dagsrapporter"></MenuItem>
+        <MenuItem text="Startlister" to="/flyv/startlister"></MenuItem>
+        <MenuItem text="Booking" to="/flyv/booking"></MenuItem>
+        <MenuItem text="Klubstatistik" to="/flyv/klubstatistik"></MenuItem>
       </Menu>
       <h2 className="text-xl text-grey-900 m-4">Personlig</h2>
       <Menu>
-        <MenuItem text="Logbog"></MenuItem>
+        <MenuItem text="Logbog" to="/flyv/logbog"></MenuItem>
       </Menu>
       <Navbar></Navbar>
     </div>

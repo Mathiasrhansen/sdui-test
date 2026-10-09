@@ -10,8 +10,8 @@ import {
   Paperclip,
   LogOut,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import { useLogout } from "@/auth";
+import { Link, useNavigate } from "react-router-dom";
 
 export function Menu({ children }) {
   return <div className="flex flex-col gap-3 ml-4 mr-4">{children}</div>;
@@ -28,18 +28,21 @@ const menuIcons = {
   bilag: Paperclip,
 };
 
-export function MenuItem({ text }) {
+export function MenuItem({ text, to }) {
   const key = text.toLowerCase().replace(/\s/g, "");
   const Icon = menuIcons[key];
 
   return (
-    <a className="flex flex-row w-full justify-between pb-1 border-b-2 border-b-grey-200 text-lg font-medium text-grey-900">
+    <Link
+      to={to}
+      className="flex flex-row w-full justify-between pb-1 border-b-2 border-b-grey-200 text-lg font-medium text-grey-900"
+    >
       <div className="flex flex-row items-center gap-2">
         {Icon && <Icon size={18} color="#0D47A1" />}
         {text}
       </div>
       <ChevronRight size={18} />
-    </a>
+    </Link>
   );
 }
 

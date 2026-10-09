@@ -7,19 +7,20 @@ import {
 import { useMe } from "@/auth";
 import Dashboard from "@/pages/Dashboard";
 import Login from "@/pages/Login";
-import Flyv from "@/pages/Flyv";
-import Dagsrapporter from "@/pages/Dagsrapporter";
-import Startlister from "@/pages/Startlister";
-import Booking from "@/pages/Booking";
-import Klubstatistik from "@/pages/Klubstatistik";
-import Logbog from "@/pages/Logbog";
+import Flyv from "@/pages/flyv/Flyv";
+import Dagsrapporter from "@/pages/flyv/Dagsrapporter";
+import Startlister from "@/pages/flyv/Startlister";
+import Booking from "@/pages/flyv/Booking";
+import Klubstatistik from "@/pages/flyv/Klubstatistik";
+import Logbog from "@/pages/flyv/Logbog";
 import Klub from "@/pages/Klub";
-import Kalender from "@/pages/Kalender";
-import Ferie from "@/pages/Ferie";
-import Mere from "@/pages/Mere";
-import Stamdata from "@/pages/Stamdata";
-import Konto from "@/pages/Konto";
-import Bilag from "@/pages/Bilag";
+import Kalender from "@/pages/kalender/Kalender";
+import Ferie from "@/pages/kalender/Ferie";
+import Mere from "@/pages/mere/Mere";
+import Stamdata from "@/pages/mere/Stamdata";
+import Konto from "@/pages/mere/Konto";
+import Bilag from "@/pages/mere/Bilag";
+import OpretBilag from "@/pages/mere/OpretBilag";
 
 // Kun for brugervenlighed! Den rigtige adgangskontrol sker i PHP på hvert endpoint.
 function RequireAuth() {
@@ -50,6 +51,7 @@ export const router = createBrowserRouter([
       { path: "/mere/stamdata", element: <Stamdata /> },
       { path: "/mere/konto", element: <Konto /> },
       { path: "/mere/bilag", element: <Bilag /> },
+      { path: "/mere/bilag/opret", element: <OpretBilag /> },
     ],
   },
   { path: "*", element: <Navigate to="/" replace /> },

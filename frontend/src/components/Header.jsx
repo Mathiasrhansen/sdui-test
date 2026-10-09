@@ -11,6 +11,14 @@ const pages = [
 // Nested sider: viser en tilbageknap til parent
 const nestedPages = [
   { label: "Ferie", path: "/kalender/ferie", parent: "/kalender" },
+  { label: "Dagsrapporter", path: "/flyv/dagsrapporter", parent: "/flyv" },
+  { label: "Startlister", path: "/flyv/startlister", parent: "/flyv" },
+  { label: "Booking", path: "/flyv/booking", parent: "/flyv" },
+  { label: "Klubstatistik", path: "/flyv/klubstatistik", parent: "/flyv" },
+  { label: "Logbog", path: "/flyv/logbog", parent: "/flyv" },
+  { label: "Stamdata", path: "/mere/stamdata", parent: "/mere" },
+  { label: "Konto", path: "/mere/konto", parent: "/mere" },
+  { label: "Bilag", path: "/mere/bilag", parent: "/mere" },
 ];
 
 const Header = () => {

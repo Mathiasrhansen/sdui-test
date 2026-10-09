@@ -7,9 +7,9 @@ export default function Mere() {
     <div className="">
       <Header></Header>
       <Menu>
-        <MenuItem text="Stamdata"></MenuItem>
-        <MenuItem text="Konto"></MenuItem>
-        <MenuItem text="Bilag"></MenuItem>
+        <MenuItem text="Stamdata" to="/mere/stamdata"></MenuItem>
+        <MenuItem text="Konto" to="/mere/konto"></MenuItem>
+        <MenuItem text="Bilag" to="/mere/bilag"></MenuItem>
         <LogoutMenuItem></LogoutMenuItem>
       </Menu>
       <Navbar></Navbar>
