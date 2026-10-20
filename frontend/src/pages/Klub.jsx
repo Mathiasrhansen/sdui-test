@@ -35,7 +35,7 @@ export default function Klub() {
       title={`${f.callsign} · ${f.flymodel}`}
       pill={
         f.status
-          ? { label: f.status, color: pillColors[f.statusColor] ?? "gray" }
+          ? { label: f.status, color: pillColors[f.statusColor] ?? "grey" }
           : undefined
       }
       favorite={f.favorite}

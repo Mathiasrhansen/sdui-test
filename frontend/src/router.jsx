@@ -9,10 +9,14 @@ import Dashboard from "@/pages/Dashboard";
 import Login from "@/pages/Login";
 import Flyv from "@/pages/flyv/Flyv";
 import Dagsrapporter from "@/pages/flyv/Dagsrapporter";
+import DagsrapporterView from "@/pages/flyv/dagsrapporter/View";
 import Startlister from "@/pages/flyv/Startlister";
+import StartlisterView from "@/pages/flyv/startlister/View";
 import Booking from "@/pages/flyv/Booking";
+import BookingView from "@/pages/flyv/booking/View";
 import Klubstatistik from "@/pages/flyv/Klubstatistik";
 import Logbog from "@/pages/flyv/Logbog";
+import LogbogView from "@/pages/flyv/logbog/View";
 import Klub from "@/pages/Klub";
 import Kalender from "@/pages/kalender/Kalender";
 import Ferie from "@/pages/kalender/Ferie";
@@ -22,7 +26,6 @@ import Konto from "@/pages/mere/Konto";
 import Bilag from "@/pages/mere/Bilag";
 import OpretBilag from "@/pages/mere/OpretBilag";
 
-// Kun for brugervenlighed! Den rigtige adgangskontrol sker i PHP på hvert endpoint.
 function RequireAuth() {
   const { data: user, isPending } = useMe();
   const location = useLocation();
@@ -40,10 +43,14 @@ export const router = createBrowserRouter([
       { path: "/", element: <Dashboard /> },
       { path: "/flyv", element: <Flyv /> },
       { path: "/flyv/dagsrapporter", element: <Dagsrapporter /> },
+      { path: "/flyv/dagsrapporter/view", element: <DagsrapporterView /> },
       { path: "/flyv/startlister", element: <Startlister /> },
+      { path: "/flyv/startlister/view", element: <StartlisterView /> },
       { path: "/flyv/booking", element: <Booking /> },
+      { path: "/flyv/booking/view", element: <BookingView /> },
       { path: "/flyv/klubstatistik", element: <Klubstatistik /> },
       { path: "/flyv/logbog", element: <Logbog /> },
+      { path: "/flyv/logbog/view", element: <LogbogView /> },
       { path: "/klub", element: <Klub /> },
       { path: "/kalender", element: <Kalender /> },
       { path: "/kalender/ferie", element: <Ferie /> },

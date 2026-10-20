@@ -16,7 +16,7 @@ const pillVariants = cva(
         red: "",
         yellow: "",
         blue: "",
-        gray: "",
+        grey: "",
       },
     },
     compoundVariants: [
@@ -24,7 +24,7 @@ const pillVariants = cva(
       { variant: "regular", color: "red", className: "bg-error-400" },
       { variant: "regular", color: "yellow", className: "bg-warning-400" },
       { variant: "regular", color: "blue", className: "bg-sea-400" },
-      { variant: "regular", color: "gray", className: "bg-grey-600" },
+      { variant: "regular", color: "grey", className: "bg-grey-600" },
       {
         variant: "subtle",
         color: "green",
@@ -47,7 +47,7 @@ const pillVariants = cva(
       },
       {
         variant: "subtle",
-        color: "gray",
+        color: "grey",
         className: "bg-grey-400 text-grey-900",
       },
     ],

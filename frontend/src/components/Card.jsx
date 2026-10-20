@@ -102,3 +102,84 @@ export function ItemCard({ className, ...rowProps }) {
     </Card>
   );
 }
+
+// Til Dagsrapporter
+export function RapportCard({ date, instructor, endTime }) {
+  return (
+    <button className="flex w-full items-center justify-between rounded-xl bg-grey-50 px-4 py-3">
+      <div className="flex flex-col text-left">
+        <p className="text-grey-900">{date}</p>
+        <p className="text-grey-600">{instructor}</p>
+      </div>
+      <Pill
+        variant="subtle"
+        color={endTime ? "blue" : "yellow"}
+        className="px-3 text-sm"
+      >
+        {endTime ? `Afmeldt kl ${endTime}` : "Ikke afmeldt"}
+      </Pill>
+    </button>
+  );
+}
+
+//til Startlister
+export function StartCard({ date, startLocation, startType, startAmmount }) {
+  return (
+    <button className="flex w-full items-center justify-between rounded-xl bg-grey-50 px-4 py-3">
+      <div className="flex flex-col text-left">
+        <p className="text-grey-900">{date}</p>
+        <p className="text-grey-600">
+          {startLocation} · {startType} · {startAmmount} starter
+        </p>
+      </div>
+      <Pill variant="subtle" color="blue" className="px-3 text-sm">
+        Åben
+      </Pill>
+    </button>
+  );
+}
+
+//til booking
+export function BookingCard({ title, availableAmmount }) {
+  return (
+    <button className="flex w-full items-center justify-between rounded-xl bg-grey-50 px-4 py-3">
+      <p className="text-grey-900">{title}</p>
+      <Pill
+        variant="subtle"
+        color={availableAmmount ? "green" : "grey"}
+        className="px-3 text-sm"
+      >
+        {availableAmmount ? `${availableAmmount} ledige` : "0 ledige"}
+      </Pill>
+    </button>
+  );
+}
+
+//til logbog
+export function LogCard({
+  flightName,
+  flightType,
+  flightTime,
+  startLocation,
+  instructorInitials,
+  startType,
+}) {
+  return (
+    <button className="flex w-full items-center justify-between rounded-xl bg-grey-50 px-4 py-3">
+      <div className="flex flex-col text-left">
+        <p className="text-grey-900">
+          {flightName} · {flightType}
+        </p>
+        <p className="text-grey-600">
+          {startLocation} · Instruktør {instructorInitials}
+        </p>
+      </div>
+      <div className="flex flex-col items-center">
+        <p className="text-grey-900">{flightTime}</p>
+        <Pill variant="subtle" color="blue" className="px-3 text-sm">
+          {startType}
+        </Pill>
+      </div>
+    </button>
+  );
+}

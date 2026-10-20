@@ -62,7 +62,7 @@ export function LogoutMenuItem({ children = "Log ud" }) {
         type="button"
         onClick={onClick}
         disabled={logout.isPending}
-        className="flex flex-row w-full justify-between pb-1 border-b-2 border-b-grey-200 text-lg font-medium text-left text-[#A32D2D] disabled:opacity-50"
+        className="flex flex-row w-full justify-between pb-1 border-b-2 border-b-grey-200 text-lg font-medium text-left text-error-800 disabled:opacity-50"
       >
         <div className="flex flex-row items-center gap-2">
           <LogOut size={18} color="#A32D2D" />

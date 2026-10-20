@@ -22,11 +22,11 @@ export default function Dashboard() {
       <div className="pl-4 pr-4">
         <h1 className="font-heading text-2xl">Flyvestatus i dag</h1>
         <div className="grid grid-cols-2 gap-4 mt-5">
-          <div className="bg-gray-100 rounded-2xl flex flex-col gap-2 px-4 py-2">
+          <div className="bg-grey-50 rounded-2xl flex flex-col gap-2 px-4 py-2">
             <h2 className="font-heading text-lg">Starter</h2>
             <p className="text-4xl">{starts}</p>
           </div>
-          <div className="bg-gray-100 rounded-2xl flex flex-col gap-2 px-4 py-2">
+          <div className="bg-grey-50 rounded-2xl flex flex-col gap-2 px-4 py-2">
             <h2 className="font-heading text-lg">Flyvetid</h2>
             <p className="text-4xl">15:27</p>
           </div>
@@ -66,7 +66,7 @@ export default function Dashboard() {
                   f.status
                     ? {
                         label: f.status,
-                        color: pillColors[f.statusColor] ?? "gray",
+                        color: pillColors[f.statusColor] ?? "grey",
                       }
                     : undefined
                 }

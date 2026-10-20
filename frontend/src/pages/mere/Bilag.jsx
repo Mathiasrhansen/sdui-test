@@ -98,12 +98,7 @@ export default function Bilag() {
               subtitle="Upload dit bilag til kasseren"
             />
           )}
-          <Button
-            asChild
-            variant="default"
-            color="blue"
-            className="w-full justify-center"
-          >
+          <Button asChild variant="default" className="w-full justify-center">
             <Link to="/mere/bilag/opret">
               <Plus className="h-5 w-5" />
               Tilføj bilag

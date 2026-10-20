@@ -18,6 +18,7 @@ const nestedPages = [
   { label: "Logbog", path: "/flyv/logbog", parent: "/flyv" },
   { label: "Stamdata", path: "/mere/stamdata", parent: "/mere" },
   { label: "Konto", path: "/mere/konto", parent: "/mere" },
+  { label: "Opret bilag", path: "/mere/bilag/opret", parent: "/mere/bilag" },
   { label: "Bilag", path: "/mere/bilag", parent: "/mere" },
 ];
 

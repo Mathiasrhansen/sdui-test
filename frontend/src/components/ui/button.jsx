@@ -9,6 +9,8 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "bg-sea-600 text-primary-foreground hover:bg-sea-600/90",
+        navigation: "bg-blue-500 text-white hover:bg-blue-500/90",
+        disabled: "bg-grey-400 text-white cursor-not-allowed",
         destructive:
           "bg-error-800 text-white hover:bg-error-800/90 focus-visible:ring-error-800/20",
         outline:
