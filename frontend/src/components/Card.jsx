@@ -123,9 +123,18 @@ export function RapportCard({ date, instructor, endTime }) {
 }
 
 //til Startlister
-export function StartCard({ date, startLocation, startType, startAmmount }) {
+export function StartCard({
+  date,
+  startLocation,
+  startType,
+  startAmmount,
+  onClick,
+}) {
   return (
-    <button className="flex w-full items-center justify-between rounded-xl bg-grey-50 px-4 py-3">
+    <button
+      onClick={onClick}
+      className="flex w-full items-center justify-between rounded-xl bg-grey-50 px-4 py-3"
+    >
       <div className="flex flex-col text-left">
         <p className="text-grey-900">{date}</p>
         <p className="text-grey-600">

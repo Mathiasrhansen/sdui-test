@@ -22,10 +22,18 @@ const nestedPages = [
   { label: "Bilag", path: "/mere/bilag", parent: "/mere" },
 ];
 
-const Header = () => {
+// label/parent kan overstyres af siden (fx en visningsside med dynamisk titel)
+const Header = ({ label, parent }) => {
   const { pathname } = useLocation();
 
-  const nested = nestedPages.find((page) => pathname.startsWith(page.path));
+  const match = nestedPages.find((page) => pathname.startsWith(page.path));
+  const nested =
+    label || parent
+      ? {
+          label: label ?? match?.label,
+          parent: parent ?? match?.parent,
+        }
+      : match;
 
   if (nested) {
     return (

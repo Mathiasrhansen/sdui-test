@@ -94,4 +94,84 @@ return [
         $st->execute([$pdo->lastInsertId()]);
         Http::json($st->fetch(), 201);
     }],
+
+    // Liste over startlister med antal starter. ?page=1&q=søgetekst
+    ['GET', '/api/start-lists', function () {
+        Http::requireUser();
+        $perPage = 5;
+        $page = max(1, (int)($_GET['page'] ?? 1));
+        $q = trim((string)($_GET['q'] ?? ''));
+        $like = '%' . addcslashes($q, '%_\\') . '%';
+        $where = "(? = '' OR sl.location LIKE ? OR sl.launch_method LIKE ? OR DATE_FORMAT(sl.date, '%d/%m-%Y') LIKE ?)";
+        $args = [$q, $like, $like, $like];
+
+        $pdo = Db::pdo();
+        $st = $pdo->prepare("SELECT COUNT(*) FROM start_lists sl WHERE $where");
+        $st->execute($args);
+        $total = (int)$st->fetchColumn();
+
+        $offset = ($page - 1) * $perPage;
+        $st = $pdo->prepare(
+            "SELECT sl.id, sl.date, sl.location, sl.launch_method,
+                    COALESCE(SUM(i.launch_count), 0) AS launch_count
+             FROM start_lists sl
+             LEFT JOIN start_list_items i ON i.start_list_id = sl.id
+             WHERE $where
+             GROUP BY sl.id
+             ORDER BY sl.date DESC, sl.id DESC
+             LIMIT $perPage OFFSET $offset"
+        );
+        $st->execute($args);
+        $items = array_map(
+            fn($r) => ['id' => (int)$r['id'], 'launch_count' => (int)$r['launch_count']] + $r,
+            $st->fetchAll()
+        );
+        Http::json(['items' => $items, 'page' => $page, 'pages' => max(1, (int)ceil($total / $perPage))]);
+    }],
+
+    // Én startliste med flyregistrering, linjer og totaler. ?id=3
+    ['GET', '/api/start-list', function () {
+        Http::requireUser();
+        $id = filter_var($_GET['id'] ?? null, FILTER_VALIDATE_INT);
+        if ($id === false || $id === null) Http::fail('Ugyldigt id', 422);
+
+        $pdo = Db::pdo();
+        $st = $pdo->prepare('SELECT id, date, location, launch_method FROM start_lists WHERE id = ?');
+        $st->execute([$id]);
+        $list = $st->fetch();
+        if (!$list) Http::fail('Startlisten findes ikke', 404);
+
+        $st = $pdo->prepare(
+            'SELECT i.id, u.name, u.initials, f.callsign, f.flymodel AS model,
+                    i.launch_count, i.flight_minutes, i.price
+             FROM start_list_items i
+             JOIN users u ON u.id = i.user_id
+             JOIN fly f ON f.id = i.fly_id
+             WHERE i.start_list_id = ?
+             ORDER BY i.id'
+        );
+        $st->execute([$id]);
+        $items = array_map(fn($r) => [
+            'id' => (int)$r['id'],
+            'launch_count' => (int)$r['launch_count'],
+            'flight_minutes' => (int)$r['flight_minutes'],
+            'price' => (float)$r['price'],
+        ] + $r, $st->fetchAll());
+
+        // Flyregistrering og totaler udledes af linjerne
+        $aircraft = [];
+        $total = ['launch_count' => 0, 'flight_minutes' => 0, 'price' => 0.0];
+        foreach ($items as $it) {
+            $a = &$aircraft[$it['callsign']];
+            $a ??= ['callsign' => $it['callsign'], 'model' => $it['model'], 'launch_count' => 0, 'flight_minutes' => 0];
+            $a['launch_count'] += $it['launch_count'];
+            $a['flight_minutes'] += $it['flight_minutes'];
+            unset($a);
+            $total['launch_count'] += $it['launch_count'];
+            $total['flight_minutes'] += $it['flight_minutes'];
+            $total['price'] += $it['price'];
+        }
+
+        Http::json($list + ['aircraft' => array_values($aircraft), 'items' => $items, 'total' => $total]);
+    }],
 ];

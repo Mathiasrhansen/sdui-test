@@ -1,3 +1,4 @@
+import { useSearchParams } from "react-router-dom";
 import Header from "@/components/Header";
 import Navbar from "@/components/Navbar";
 import {
@@ -8,59 +9,66 @@ import {
   Total,
   ViewTemplate,
 } from "@/components/Startliste";
+import {
+  useStartList,
+  formatMinutes,
+  formatPrice,
+  formatDate,
+} from "@/lib/startlists";
 
 export default function View() {
+  const [params] = useSearchParams();
+  const { data, isPending, isError } = useStartList(params.get("id"));
+
   return (
     <div>
-      <Header />
+      <Header
+        label={data ? formatDate(data.date) : "Startliste"}
+        parent="/flyv/startlister"
+      />
       <ViewTemplate>
-        <StartInfo
-          location="Gørløse (EKGL)"
-          startType="Flyslæb"
-          starterAmmount="4"
-          starterTime="01:10"
-        ></StartInfo>
-        <List title="Flyregistrering">
-          <FlightItem
-            name="XKI"
-            type="ASK-21"
-            starters="2"
-            time="00:32"
-          ></FlightItem>
-          <FlightItem
-            name="XOD"
-            type="ASK-23"
-            starters="2"
-            time="00:38"
-          ></FlightItem>
-        </List>
-        <List title="Startliste">
-          <StartItem
-            pilot="Anette Larsen"
-            initials="ALA"
-            name="XOD"
-            starterAmmount="2"
-            starterTime="00:38"
-            price="350"
-          ></StartItem>
-          <StartItem
-            pilot="Casper Gyldenpalm"
-            initials="CAG"
-            name="XKI"
-            starterAmmount="1"
-            starterTime="00:18"
-            price="315"
-          ></StartItem>
-          <StartItem
-            pilot="Poul Erik Thomsen"
-            initials="POT"
-            name="XKI"
-            starterAmmount="1"
-            starterTime="00:14"
-            price="210"
-          ></StartItem>
-        </List>
-        <Total totalStarterAmmount="4" totalPrice="875"></Total>
+        {isPending && <p className="text-grey-600">Henter startliste...</p>}
+        {isError && (
+          <p className="text-grey-600">Kunne ikke hente startlisten.</p>
+        )}
+        {data && (
+          <>
+            <StartInfo
+              location={data.location}
+              startType={data.launch_method}
+              starterAmmount={data.total.launch_count}
+              starterTime={formatMinutes(data.total.flight_minutes)}
+            />
+            <List title="Flyregistrering">
+              {data.aircraft.map((a) => (
+                <FlightItem
+                  key={a.callsign}
+                  name={a.callsign}
+                  type={a.model}
+                  starters={a.launch_count}
+                  time={formatMinutes(a.flight_minutes)}
+                />
+              ))}
+            </List>
+            <List title="Startliste">
+              {data.items.map((i) => (
+                <StartItem
+                  key={i.id}
+                  pilot={i.name}
+                  initials={i.initials}
+                  name={i.callsign}
+                  starterAmmount={i.launch_count}
+                  starterTime={formatMinutes(i.flight_minutes)}
+                  price={formatPrice(i.price)}
+                />
+              ))}
+            </List>
+            <Total
+              totalStarterAmmount={data.total.launch_count}
+              totalPrice={formatPrice(data.total.price)}
+            />
+          </>
+        )}
       </ViewTemplate>
       <Navbar />
     </div>
